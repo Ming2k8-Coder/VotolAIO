@@ -1,0 +1,37 @@
+Master Handshake SEND:[ALWAYS]
+C9 14 02 4C 44 47 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 0D 
+	B0-1:Header mean from Master
+	B2: SEND Command
+	B3-4-5:hex to acsii LDGET
+
+
+VOTOL SEND: [7 packet]
+
+/+/ Header
+	B0-1: Header mean send from votol
+	B2: status Packet: [05: Data][0D: AutoLern-mode/respone packet]
+	B3: 0x52 [data packet] 
+	B4:Packet index [decrease from 7 to 1] 
+
+
+/+/ C0 14 05 52 07/ 39 C7 0D E0 50 FA 00 00 00 00 28 02 76 04 5F 00 71 4B 0D
+	B5: Throttle begin voltage (divide 46)
+	B6: Throttle end voltage (divide 46)
+	B7: Throttle low protect volt (divide 46)
+	B8: Throttle high protect volt (divide 46)
+	B9: Rate of deaccel
+	B10: Rate of rise
+	B11-12:starting torque
+	B13-14:Combine 
+	B16-17:Under voltage
+
+
+
+
+
+
+
+
+
+
+

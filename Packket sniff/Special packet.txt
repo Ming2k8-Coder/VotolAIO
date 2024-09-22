@@ -1,0 +1,5 @@
+C0 14 0D FE EF 55 AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 37 0D
+votolinit
+	B0-1: Header mean send from votol
+	B2: status Packet: [05: Norm][0D: AutoLern-mode/respone packet]
+	B3: 0xFE [INIT] 

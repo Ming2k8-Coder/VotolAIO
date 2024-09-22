@@ -1,0 +1,16 @@
+Program param write SEND:
+/+/ Header
+	B0-1:Header mean from Master
+	B2-3:Param write packet
+	B4: packet index {increase from 1 to 7}
+
+
+	
+-----------------------------------------------------------------------------
+RECV 
+/+/ C0 14 0D 50 4E 00 00 00 00 02 00 00 00 04 00 00 55 4B 00 00 01 07 D9 0D
+	B0-1: Header mean send from votol
+	B2: status Packet: [05: Norm][0D: AutoLern-mode/respone packet]
+	B3: 0x50 [respone packet] P
+	B4:Packet index [in case 1 pack 0x4E]  N
+	554B : ascii UK

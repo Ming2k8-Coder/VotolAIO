@@ -1,0 +1,120 @@
+ B4,packet index 1->7,end with xor sum and magic end
+operation +,-,x,: in hex
+-----------------------------------------------
+/+/ C9 14 02 4C 44 47 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 0D 
+	B0-1:Header mean from Master
+	B2: 02 always
+	B3-4-5-6-7:hex to acsii LDGET
+	B22-23:XOR-0D
+/+/ C9 14 02 52 45 53 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 8A 0D 
+	B0-1:Header mean from Master
+	B2: 02 always
+	B3-4-5-6-7:hex to acsii RESET
+----------------------------------------------------------------
+	B0:magic packet [C9:Program SEND][C0:VOTOL SEND]
+	B1:always 14 (why?)
+	B2-3:magic packet -Program B2:02 // B3: 50 to acsii is P (param write)
+			  [0D(respone) 50(ascii:P):Voto Debug WriOK][05 52(acsii:R):Voto Debug Read]
+----------------------------------------------------------------
+/+/ 01 14 02 03 7F 02 94 0A 00 32 23 28 02 76 04 5F 00 71
+14	B5: Model type 	    [05: EM-30s][0A:EM-50s][14:EM-100s][1E:EM-150s][28:EM-200s]
+02	B6: Batteryvvoltage [00: 48v][01: 60v][02: 72v][03:84v][04: 96v]
+037F	B7-8: Overvoltage
+0294	B9-10: Soft Undervoltage
+0A	B11: Undervolt Variation
+0032	B12-13: Regen Current
+2328	B14-15: Phase CUrrent
+0276	B16-17: Under voltage
+045F	B18-19: Volcalibrition
+0071	B20-21: Curcalbritation
+----------------------------------------------------------------
+/+/ 02 00 1E 3C 50 5F 0F A0 23 28 17 70 A5 2A 0C 1E 1E 0F
+001E 	B5-6: Bus current Limit
+3C	B7: gear1 %RPM
+50	B8: gear2 %RPM
+5F	B9: gear3 %RPM
+0FA0	B10-11: FluxWeaken 
+2328	B12-13: hige param1/KI (in PID) 
+1770	B14-15: mid param1/StartPhase
+A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
+	     def gear		    		  [x	 (y+2):High/(y+4):Mid/(y+8):Low]
+	     Motor type 	    [xy: Surface] [(x+1) y:Vtype]
+	     Button/switch	    [xy:button]	  [(x+2) y:Switch]
+	     Motor Noise Reduction  [xy:OFF]	  [(x+4) y:ON]
+	     softstart		    [xy:OFF]      [(x+8) y:ON]
+2A	B17: Speed limit percent
+0C	B18: SoftStartGrade
+1E	B19: sport off after(sec)
+1E	B20: sport recovery(sec)
+0F	B21: MTPA/Torque per A
+---------------------------------------------------------------
+/+/ 03 00 1E 50 64 69 04 1A 00 14 24 D4 0A 30 18 16 E9 71
+001E	B5-6:hall angle (Program min -99 max 99)
+	     if positive B5:00;angle = B6
+	     if negative B5:FF; angle = 100 - B6
+50	B7:Ic hightemp
+64	B8:Ic overtemp
+69	B9:Ic templimit
+041A	B10-11:TC1/engine phase when temp limit occur
+0014	B12-13:TC2/Traction Control
+24D4	B14-15: TC3/onelin speed compensate/(Real/onelin)*64*256
+0A	B16: Reverse %RPM
+30	B17:{00:xy} Hill Hold control 		    [x0: OFF] [x     8: ON]
+		    exchange phase wire blu-gren    [xy:no]   [(x+1) y:yes]
+		    exchange hall wire yellow-blu   [xy:no]   [(x+2) y:yes]
+		    Sport auto off		    [xy:OFF]  [(x+4) y:	ON]
+		    motor rotation 		    [xy: FWD] [(x+8) y: REV]
+18	B18: Pole pairs
+16	B19: EABS%
+E971	B20-21:RESERVED
+---------------------------------------------------------------
+/+/ 04 06 0C CC 01 40 04 B0 5C 5C 05 01 F4 17 70 00 23 03
+06	B5: auto reverse (MVB) 			[xy:OFF]	  [x     (y+1):ON]
+	    ConstantSpeed (3gear): 	[xy:OFF]	  [x     (y+2):ON]
+	    communication(output) 		[xy:Hall speedo]  [x     (y+4):onelin]
+	    Cruise 				[xy:OFF]          [x     (y+6):ON]
+	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
+	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:High]
+	    secureboot 				[xy:OFF]	  [(x+4) y:ON]
+0CCC	B6-7:MVB percent  (divine by 147) 
+0140	B8-9:MVB torque
+04B0	B10-11:Max RPM
+5C	B12:gear1 %A
+5C	B13:gear2 %A
+05	B14: Overrate speed
+01F4	B15-16: FluxWeaken param 2/KP (in PID)
+1770	B17-18:MaxPhaseLimit 
+00	B19:RESERVED
+23	B20:MaxPhaseLimitTime(after x sec, unlimit)
+03	B21:WeakFluxCalibriation
+----------------------------------------------------------------
+/+/ 05 CD B7 CD B6 CD B8 CD B9 C0 11 C0 05 C0 07 C0 08 03
+CD	B5: PD0 checkbox [C(x=0): If F mode and no checkkbox]
+			 [C(x+2):if U mode]
+			 [C(x+4):if D mode]
+			 [C(x+1):if SW checked]
+			 [C(x+8):if LA checked]
+B7	B6: PD0 type [RANGE:00->7F <=> 1->128][+80 if IO]
+CD	B7: 	JTCK checkbox[same PD0]
+B6	B8: 	JTCK type [same PD0]
+CDB8	B9,10: 	SWD Checkbox [same PD0], SWD type [same PD0]
+CDB9	B11,12: PA11 Checkbox and type
+C011	B13,14: PB3 Checkbox and type
+C005	B15,16:	PD1 Checkbox and type
+C007	B17,18:	PA12 Checkbox and type
+C008	B19,20:	PC15 Checkbox and type
+03	B21:RESERVED
+---------------------------------------------------------------
+/+/ 06 C0 09 C0 8A C0 0B C0 00 C0 00 C0 15 C0 0F C8 92 71
+---------------------------------------------------------------
+/+/ 07 39 C7 0D E0 50 FA 00 00 00 00 28 02 76 04 5F 00 71
+39	B5: Throttle begin voltage (hex to dec,divide bby 46(base10))
+C7	B6: Throttle end voltage (above)
+0D	B7: Throttle low protect volt (above)
+E0	B8: Throttle high protect volt (above)
+50	B9: Rate of deaccel
+FA	B10: Rate of rise
+0000	B11-12:starting torque
+0000	B13-14:Combine 
+28 02 76 04 5F 00 71 : get from pack1 to make current check results 
+

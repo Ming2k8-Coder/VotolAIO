@@ -1,0 +1,6 @@
+Tính hệ số KP,KI(chính xác hơn nghe)
+Mô men xoắn(torque[N.m]);KP,dòng xả max ở volt nhất định = công suất/volt (làm tròn lên)
+torque = KP* dòng
+
+KP = 10*KI
+CHÚ Ý: tăng torque thì giảm tops và ngược lại
