@@ -161,5 +161,3 @@ while not exi:
             count = 0
             line = []
             msg = ''
-
-

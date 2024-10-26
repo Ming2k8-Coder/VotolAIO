@@ -4,3 +4,8 @@ torque = KP* dòng
 
 KP = 10*KI
 CHÚ Ý: tăng torque thì giảm tops và ngược lại
+
+Tính MTPA ở hệ volt đang dùng
+Kv = ratedSpeed/volt (ratedSpeed là tốc dộ khi tắt FluxWeaken và tắt enable 3 gear)
+Basic MTPA: MTPA ~ (Kv/60)*volt (hub)
+Advanced MTPA: MTPA ~ (Kv/60)*volt*polepair*efficentcy (mid)
