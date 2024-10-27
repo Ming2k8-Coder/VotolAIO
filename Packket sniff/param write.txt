@@ -2,9 +2,26 @@ Program param write SEND:
 /+/ Header
 	B0-1:Header mean from Master
 	B2-3:Param write packet
-	B4: packet index {increase from 1 to 7}
-
-
+	B4: packet index {increase from 1 to 7}	=1	=2 >>>>	=7
+	B5: File Byte				0	17	102
+	B6: File Byte				1	18	103
+	B7: File Byte				2	19	104
+	B8: File Byte				3	20	105
+	B9: File Byte				4	21	106
+	B10: File Byte				5	22	107
+	B11: File Byte				6	23	108
+	B12: File Byte				7	24	109
+	B13: File Byte				8	25	110
+	B14: File Byte				9	26	111
+	B15: File Byte				10	27	112
+	B16: File Byte				11	28	113
+	B17: File Byte				12	29	114
+	B18: File Byte				13	30	115
+	B19: File Byte				14	31	116
+	B20: File Byte				15	32	117
+	B21: File Byte				16	33	118
+	B22: Xor Sum
+	B23: End
 	
 -----------------------------------------------------------------------------
 RECV 
