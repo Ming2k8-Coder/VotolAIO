@@ -1,0 +1,113 @@
+There are bytes that are never displayed in the PC application. So I don't know what their use is.
+In a wechat application i found this description(translate):	-motor resistance
+																-motor inductance
+																-motor flux
+																-Phase shift compensation coefficient
+																-Engine acceleration slope
+																-Engine deceleration slope
+but i can't place them because i don't have the bluetooth adapter.
+
+
+B0:			Model						[0=EM30S][10=EM50][20=EM100][30=EM150][40=EM200]
+B1:			Battery voltage / Brand		b0>b3:[0=48V][1=60V][2=72V][3=84V][4=96V]
+										b4>b7:Brand (0 to 15)
+B2-B3:		Overvoltage					x.x(V)
+B4-B5: 		Soft under voltage			x.x(V)
+B6:			Under variation				x.x(V)
+B7-B8:		Regeneration				x(A)
+B9-B10:		Max phase current
+B11-B12:	Under voltage				x.x(V)
+B13-B14:	Voltage calibration
+B15-B16:	Current valibration
+B17-B18:	Max current					x(A)
+B19:		Low speed ratio				0-100% of max speed
+B20:		Mid speed ratio				0-100% of max speed
+B21:		High speed ratio			0-100% of max speed
+B22-B23:	Flux weakening				0-5000
+B24-B25:	KP							1000-9000
+B26-B27:	Start phase current			less than phase current
+B28:		binary parameter			b0=Speed limit
+										b1=Default high speed
+										b2=Default mid speed
+										b3=Default high speed
+										b4=Motor type [0=Hub][1=V-type]
+										b5=[0=Button speed][1=Switch speed]
+										b6=Low brake
+										b7=Soft start
+B29:		Speed ratio					0-100%
+B30:		Soft start					0-16
+B31:		Logout time					x(s)
+B32:		Recovery time				x(s)
+B33:		Flux compensation(MTPA)
+B34-B35:	Hall shift angle			x(°)
+B36:		Initial temperature			x(°C)
+B37:		Over temperature			x(°C)
+B38:		Max temperature				x(°C)
+B39-B40:	TC1
+B41-B42:	TC2
+B43-B44:	TC3
+B45:		Reverse speed limit			0-100% of max speed
+B46:		binary parameter			b0=
+										b1=
+										b2=
+										b3=HHC
+										b4=Exchange phase wire
+										b5=Exchange hall wire
+										b6=Auto logout sport mode
+										b7=[0=FWD][1=REV]
+B47:		Motor pole pair
+B48:		EBS ratio					0-100%
+B49:		Software version			x.xx
+B50:		Hardware version			x.xx
+B51:		binary parameter			b0=Move assist
+										b1=HDC
+										b2=Speedometer output [0=Hall][1=One line]
+										b3=Cruise control
+										b4=Double voltage
+										b5=Double voltage [0=low][1=high]
+										b6=Secure boot
+										b7=
+B52-B53:	Move assist speed			0-100% of max speed
+B54-B55:	Move assist torque
+B56-B57:	Max speed					RPM
+B58:		Low speed current ratio		0-100% of Max current
+B59:		mid speed current ratio		0-100% of max current
+B60:		Overcurrent					% of max current
+B61-B62:	KI							100-1200
+B63-B64:	Limit phase					Less than start phase current
+B65-B66:	Time out (Limit phase)		x(s)
+B67:		Weak Flux calibration
+B68:		PD0 binary					[b0=SW][b1=U][b2=D][b3=LA]
+B69:		PD0 function				[b0>b6=function][b7=IO]
+B70-B71:	JTCK binary/function
+B72-B73:	SWD binary/function
+B74-B75:	PA11 binary/function
+B76-B77:	PB3 binary/function
+B78-B79:	PD1 binary/function
+B80-B81:	PA12 binary/function
+B82-B83:	PC15 binary/function
+B84:		
+B85-B86:	PA0 binary/function
+B87-B88:	PB9 binary/function
+B89-B90:	PB4 binary/function
+B91-B92:	PA15 binary/function
+B93-B94:	PB2 binary/function
+B95-B96:	PC14 binary/function
+B96-B98:	PB5 binary/function
+B99-B100:	PD15 binary/function
+B101:		
+B102:		Throttle start voltage		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
+B103:		Throttle end voltage		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
+B104:		Throttle low protect		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
+B105:		Throttle high protect		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
+B106:		Rate of decline				0-250
+B107:		Rate of Rise				0-350
+B108-B109:	Start torque
+B110-B111:	Delay torque				0-350
+B112:
+B113:
+B114:
+B115:
+B116:
+B117:
+B118:
