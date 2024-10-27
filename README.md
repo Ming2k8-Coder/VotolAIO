@@ -13,4 +13,5 @@
 ## Development
   - Decoded communication between votol and program, using Realterm and Com0Com
   - Have a python emulate Em100s, with my votol params ;))
+  - Need Com0Com program to connect python to program
 ---
