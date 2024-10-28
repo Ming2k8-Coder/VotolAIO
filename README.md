@@ -3,7 +3,7 @@
 ## Program 
   - 2 type of Program: stock and 3rd party
   - stock: basic, semi-advanced only
-  - 3rd party (vino) full description, advanced, well remake
+  - 3rd party (vino) full description, advanced, well remake  
   -**Note**:On facebook, Mike-Reyes have his own program. Differ form vino is change overrate speed to P value
 ---
 ## Docs
