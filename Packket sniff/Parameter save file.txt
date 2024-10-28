@@ -1,11 +1,10 @@
-There are bytes that are never displayed in the PC application. So I don't know what their use is.
 In a wechat application i found this description(translate):	-motor resistance
 																-motor inductance
 																-motor flux
 																-Phase shift compensation coefficient
 																-Engine acceleration slope
 																-Engine deceleration slope
-but i can't place them because i don't have the bluetooth adapter.
+but i can't place them because i don't have the bluetooth adapter (you can diy it. Bluetooth adapter is a hc05 serial bridge)
 
 note: data form hex. Everyline is a hex, range (00-FF).Two lines make a dual hex 0BB8 (fluxweaken) -> 3000
 NOTE: how program write .ini Config file to votol
