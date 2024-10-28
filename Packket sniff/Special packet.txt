@@ -1,5 +1,62 @@
-C0 14 0D FE EF 55 AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 37 0D
-votolinit
+/+/ C0 14 0D FE EF 55 AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 37 0D
+votolinit(Votolsend)
 	B0-1: Header mean send from votol
 	B2: status Packet: [05: Norm][0D: AutoLern-mode/respone packet]
-	B3: 0xFE [INIT] 
+	B3: 0xFE [INIT]
+----------------------------------------------------------------------------- 
+/+/ C9 14 02 52 45 53 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 8A 0D 
+votolreset(Progsend)
+	B0-1:Header mean from Master
+	B2: 02 always
+	B3-4-5-6-7:hex to acsii RESET
+++++++++++++++++++++++++++++++++
+/+/ ?
+votolresetreply(Votolsend)
+------------------------------------------------------------------------------
+(progsend)
+/+/C9 14 02 53 48 4F 57 00 00 00 00 00 AA 00 00 00 00 AA 00 00 00 00 DC 0D
+	B0-1:Master Send
+	B2:MagicPacket
+	B3-4-5-6:Acsii "SHOW"
+	B12: Remote/local control [55: Remote(từ uart)][AA: local(tự đk)]
+	B13-14: Throttle remote (divide 5945(base10) to get throttle voltage)
+	B15: Gear/brake/reverse/lock(remote) [x0->x3:L/M/H/S][8x:Brake][4x:Reverse][2x:Lock]
+	B16: weak flux calibri (max 255)
+	B18-19: Voltage Calibri (1119 opt)
+	B20-21: Current calibri
+	B22:Xor sum
+	B23:Packend
+++++++++++++++++++++++++++++++++++++++++++
+(progrecv)
+c0 14 0d 59 42 02 14 00 0f 01 00 00 00 00 02 b8 5d 4b 22 d6 80 03 01 0d
+	B0~B1:C0 14 // header of string means data sent by controller
+	B5~B6:02 14 converts into fixed-point Dec is the battery voltage, for my case it is 53.2V
+	B7~B8: 00 0f converts into fixed-point Dec is the battery current, for my case is 1.5A
+	B10~B13: 32bit fault code
+	B14~B15: 02 b8 converts into integer is the rpm, for my case is 696
+	B16: 5d converts into Dec - 50 is the Controller temp, for my case is 43C
+	B17: 4b converts into Dec - 50 is the External temp, for my case is 25C
+	B18~B19: 22 d6 converts into integer is the temperature coefficient, for my case is 8918
+	B20: gear, antitheft, regen status [x0->x3:L/M/H/S]
+									   [x     (y+8):Parked]
+									   [x     (y+4):Reverse]
+									   [(x+1) y:Brake]
+									   [(x+2) y:Lock(antitherf)]
+									   [(x+4) y:SideStand]
+									   [(x+8) y:Regen]
+
+		}
+	B21: controller status
+		also the detail for status in B21:
+		0=IDLE
+		1=INIT
+		2=START
+		3=RUN
+		4=STOP
+		5=BRAKE
+		6=WAIT
+		7=FAULT
+
+
+B22: XOR Sum of first 22 bytes string (Hash checking)
+B23: Packet end

@@ -7,6 +7,18 @@ In a wechat application i found this description(translate):	-motor resistance
 																-Engine deceleration slope
 but i can't place them because i don't have the bluetooth adapter.
 
+note: data form hex. Everyline is a hex, range (00-FF).Two lines make a dual hex 0BB8 (fluxweaken) -> 3000
+NOTE: how program write .ini Config file to votol
+	divide 119 bytes to 7 packet (17 bytes per packet)
+	add magic start,header,magic packet,packet index
+	end with XOR and 0D
+	packet 1: B0-B16
+	packet 2: B17-B33
+	packet 3: B34-B50
+	packet 4: B51-B67
+	packet 5: B68-B84
+	packet 6: B85-B101
+	packet 7: B102-B118	
 
 B0:			Model						[0=EM30S][10=EM50][20=EM100][30=EM150][40=EM200]
 B1:			Battery voltage / Brand		b0>b3:[0=48V][1=60V][2=72V][3=84V][4=96V]
@@ -66,7 +78,7 @@ B51:		binary parameter			b0=Move assist
 										b4=Double voltage
 										b5=Double voltage [0=low][1=high]
 										b6=Secure boot
-										b7=
+										b7=move vehicle booster
 B52-B53:	Move assist speed			0-100% of max speed
 B54-B55:	Move assist torque
 B56-B57:	Max speed					RPM
@@ -86,7 +98,7 @@ B76-B77:	PB3 binary/function
 B78-B79:	PD1 binary/function
 B80-B81:	PA12 binary/function
 B82-B83:	PC15 binary/function
-B84:		
+B84:		RESERVED
 B85-B86:	PA0 binary/function
 B87-B88:	PB9 binary/function
 B89-B90:	PB4 binary/function
@@ -95,7 +107,7 @@ B93-B94:	PB2 binary/function
 B95-B96:	PC14 binary/function
 B96-B98:	PB5 binary/function
 B99-B100:	PD15 binary/function
-B101:		
+B101:		RESERVED
 B102:		Throttle start voltage		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
 B103:		Throttle end voltage		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
 B104:		Throttle low protect		0/255=0/5.5V (exemple: 1=0.02V, 50=1.07V)
@@ -104,10 +116,4 @@ B106:		Rate of decline				0-250
 B107:		Rate of Rise				0-350
 B108-B109:	Start torque
 B110-B111:	Delay torque				0-350
-B112:
-B113:
-B114:
-B115:
-B116:
-B117:
-B118:
+B112-118: make check result (like coms protocol)

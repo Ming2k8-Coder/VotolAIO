@@ -21,7 +21,7 @@ NOTE: nếu có (?) hoặc (đ bt) thì không nên sử dụng <không được
 19:undef_IO_option(func của PD15 CẤM DÙNG)
 20:emergent_sotp(dừng khẩn cấp)
 21:LY_undef_IO_option(đ bt ~19)
-22:LY_e_gear(đ bt ~7)
+22:LY_e_gear(dây tự học)
 23:LY_single_wire_communication(đ bt ~11) 
 24:speed_limit(on/off giới hạn tốc độ)
 25:eabs_on_off(on/off phanh tái tạo)

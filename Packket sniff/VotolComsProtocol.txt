@@ -1,20 +1,18 @@
- B4,packet index 1->7,end with xor sum and magic end
-operation +,-,x,: in hex
+ 
+Note:operation +,-,x,: in hex 
 -----------------------------------------------
 /+/ C9 14 02 4C 44 47 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 0D 
 	B0-1:Header mean from Master
 	B2: 02 always
 	B3-4-5-6-7:hex to acsii LDGET
 	B22-23:XOR-0D
-/+/ C9 14 02 52 45 53 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 8A 0D 
-	B0-1:Header mean from Master
-	B2: 02 always
-	B3-4-5-6-7:hex to acsii RESET
 ----------------------------------------------------------------
-	B0:magic packet [C9:Program SEND][C0:VOTOL SEND]
+REPLIES From Controller
+	B0:magic start [C9:Program SEND][C0:VOTOL SEND]
 	B1:always 14 (why?)
 	B2-3:magic packet -Program B2:02 // B3: 50 to acsii is P (param write)
-			  [0D(respone) 50(ascii:P):Voto Debug WriOK][05 52(acsii:R):Voto Debug Read]
+			  [0D(respone1pactket) 50(ascii:P):Voto Debug WriOK][05(responepackets) 52(acsii:R):Voto Debug Read]
+	B4,packet index 1->7,end with xor sum and magic end
 ----------------------------------------------------------------
 /+/ 01 14 02 03 7F 02 94 0A 00 32 23 28 02 76 04 5F 00 71
 14	B5: Model type 	    [05: EM-30s][0A:EM-50s][14:EM-100s][1E:EM-150s][28:EM-200s]
@@ -34,7 +32,7 @@ operation +,-,x,: in hex
 50	B8: gear2 %RPM
 5F	B9: gear3 %RPM
 0FA0	B10-11: FluxWeaken 
-2328	B12-13: hige param1/KI (in PID) 
+2328	B12-13: hige param1/KP (in PID) 
 1770	B14-15: mid param1/StartPhase
 A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 	     def gear		    		  [x	 (y+2):High/(y+4):Mid/(y+8):Low]
@@ -57,7 +55,7 @@ A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 69	B9:Ic templimit
 041A	B10-11:TC1/engine phase when temp limit occur
 0014	B12-13:TC2/Traction Control
-24D4	B14-15: TC3/onelin speed compensate/(Real/onelin)*64*256
+24D4	B14-15:TC3/onelin speed compensate/(Real/onelin)*64*256
 0A	B16: Reverse %RPM
 30	B17:{00:xy} Hill Hold control 		    [x0: OFF] [x     8: ON]
 		    exchange phase wire blu-gren    [xy:no]   [(x+1) y:yes]
@@ -66,11 +64,12 @@ A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 		    motor rotation 		    [xy: FWD] [(x+8) y: REV]
 18	B18: Pole pairs
 16	B19: EABS%
-E971	B20-21:RESERVED
+E9	B20:Software version
+71	B21:Hardware version
 ---------------------------------------------------------------
 /+/ 04 06 0C CC 01 40 04 B0 5C 5C 05 01 F4 17 70 00 23 03
 06	B5: auto reverse (MVB) 			[xy:OFF]	  [x     (y+1):ON]
-	    ConstantSpeed (3gear): 	[xy:OFF]	  [x     (y+2):ON]
+	    ConstantSpeed (3gearHDC): 		[xy:OFF]	  [x     (y+2):ON]
 	    communication(output) 		[xy:Hall speedo]  [x     (y+4):onelin]
 	    Cruise 				[xy:OFF]          [x     (y+6):ON]
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
@@ -81,11 +80,10 @@ E971	B20-21:RESERVED
 04B0	B10-11:Max RPM
 5C	B12:gear1 %A
 5C	B13:gear2 %A
-05	B14: Overrate speed
-01F4	B15-16: FluxWeaken param 2/KP (in PID)
-1770	B17-18:MaxPhaseLimit 
-00	B19:RESERVED
-23	B20:MaxPhaseLimitTime(after x sec, unlimit)
+05	B14:gear3 %A/Overrate speed/KD (in PID)
+01F4	B15-16:FluxWeaken param 2/KI (in PID)
+1770	B17-18:MaxPhaseLimit
+23	B19-20:MaxPhaseLimitTime(after x sec, unlimit)
 03	B21:WeakFluxCalibriation
 ----------------------------------------------------------------
 /+/ 05 CD B7 CD B6 CD B8 CD B9 C0 11 C0 05 C0 07 C0 08 03
@@ -115,6 +113,6 @@ E0	B8: Throttle high protect volt (above)
 50	B9: Rate of deaccel
 FA	B10: Rate of rise
 0000	B11-12:starting torque
-0000	B13-14:Combine 
+0000	B13-14:Combine /delay torue
 28 02 76 04 5F 00 71 : get from pack1 to make current check results 
 
