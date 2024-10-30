@@ -1,4 +1,5 @@
- 
+
+
 Note:operation +,-,x,: in hex 
 -----------------------------------------------
 /+/ C9 14 02 4C 44 47 45 54 00 00 00 00 00 00 00 00 00 00 00 00 00 00 81 0D 
@@ -35,7 +36,7 @@ REPLIES From Controller
 2328	B12-13: hige param1/KP (in PID) 
 1770	B14-15: mid param1/StartPhase
 A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
-	     def gear		    		  [x	 (y+2):High/(y+4):Mid/(y+8):Low]
+	     def gear		    [x	 (y+2):High/(y+4):Mid/(y+8):Low]
 	     Motor type 	    [xy: Surface] [(x+1) y:Vtype]
 	     Button/switch	    [xy:button]	  [(x+2) y:Switch]
 	     Motor Noise Reduction  [xy:OFF]	  [(x+4) y:ON]
@@ -49,7 +50,7 @@ A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 /+/ 03 00 1E 50 64 69 04 1A 00 14 24 D4 0A 30 18 16 E9 71
 001E	B5-6:hall angle (Program min -99 max 99)
 	     if positive B5:00;angle = B6
-	     if negative B5:FF; angle = 100 - B6
+	     if negative B5:FF; angle = 100 - B6 base10
 50	B7:Ic hightemp
 64	B8:Ic overtemp
 69	B9:Ic templimit
@@ -75,7 +76,7 @@ E9	B20:Software version
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
 	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:High]
 	    secureboot 				[xy:OFF]	  [(x+4) y:ON]
-0CCC	B6-7:MVB percent  (divine by 147) 
+0CCC	B6-7:MVB percent  (divine by 147(base10)) 
 0140	B8-9:MVB torque
 04B0	B10-11:Max RPM
 5C	B12:gear1 %A
