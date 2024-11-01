@@ -72,11 +72,11 @@ E9	B20:Software version
 06	B5: auto reverse (MVB) 			[xy:OFF]	  [x     (y+1):ON]
 	    ConstantSpeed (3gearHDC): 		[xy:OFF]	  [x     (y+2):ON]
 	    communication(output) 		[xy:Hall speedo]  [x     (y+4):onelin]
-	    Cruise 				[xy:OFF]          [x     (y+6):ON]
+	    Cruise 				[xy:OFF]          [x     (y+8):ON]
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
 	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:High]
 	    secureboot 				[xy:OFF]	  [(x+4) y:ON]
-0CCC	B6-7:MVB percent  (divine by 93) 
+0CCC	B6-7:MVB percent  (divine by 147) 
 0140	B8-9:MVB torque
 04B0	B10-11:Max RPM
 5C	B12:gear1 %A
@@ -84,7 +84,7 @@ E9	B20:Software version
 05	B14:gear3 %A/Overrate speed/KD (in PID)
 01F4	B15-16:FluxWeaken param 2/KI (in PID)
 1770	B17-18:MaxPhaseLimit
-23	B19-20:MaxPhaseLimitTime(after x sec, unlimit)
+0023	B19-20:MaxPhaseLimitTime(after x sec, unlimit)
 03	B21:WeakFluxCalibriation
 ----------------------------------------------------------------
 /+/ 05 CD B7 CD B6 CD B8 CD B9 C0 11 C0 05 C0 07 C0 08 03

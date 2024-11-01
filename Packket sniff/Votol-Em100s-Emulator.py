@@ -30,9 +30,11 @@ def map_range(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) // (in_max - in_min) + out_min
 def crc16(buffer):
     checksum = 0
+    # print(buffer)
     for i in buffer:
         checksum = checksum ^ i
     checksum=checksum.to_bytes(1)
+    # print(checksum)
     return checksum
 def transmitDisp():
     global icstatus
@@ -61,17 +63,17 @@ def connect():
         print("ParamFile not found,please write to emulator first")
         return
     paramfile = f.readlines()
+    f.close()
     packet1send(paramfile)
     packet2send(paramfile)
     packet3send(paramfile)
-    
-    # ser.write(b'\xC0\x14\x05\x52\x01\x14\x02\x03\x7F\x02\x94\x0A\x00\x32\x23\x28\x02\x76\x04\x5F\x00\x71\x13\x0D') #page1 
-    # ser.write(b'\xC0\x14\x05\x52\x02\x00\x1E\x3C\x50\x5F\x0F\xA0\x23\x28\x17\x70\xA5\x2A\x0C\x1E\x1E\x0F\xE3\x0D')
-    # ser.write(b'\xC0\x14\x05\x52\x03\x00\x1E\x50\x64\x69\x04\x1A\x00\x14\x24\xD4\x0A\x30\x18\x16\xE9\x71\x95\x0D') #version + page 3
-    # ser.write(b'\xC0\x14\x05\x52\x04\x06\x0C\xCC\x01\x40\x04\xB0\x5C\x5C\x05\x01\xF4\x17\x70\x00\x00\x03\x20\x0D')
-    # ser.write(b'\xC0\x14\x05\x52\x05\xC0\x01\xC0\x00\xC0\x00\xC0\x00\xC0\x11\xC0\x05\xC0\x07\xC0\x08\x03\x9F\x0D')
-    # ser.write(b'\xC0\x14\x05\x52\x06\xC0\x09\xC0\x8A\xC0\x0B\xC0\x00\xC0\x00\xC0\x15\xC0\x0F\xC8\x92\x71\xFC\x0D')
-    # ser.write(b'\xC0\x14\x05\x52\x07\x39\xC7\x0D\xE0\x50\xFA\x00\x00\x00\x00\x27\x02\x76\x04\x5D\x00\x71\x46\x0D')
+    packet4send(paramfile)
+    #ser.write(b'\xC0\x14\x05\x52\x04\x06\x0C\xCC\x01\x40\x04\xB0\x5C\x5C\x05\x01\xF4\x17\x70\x00\x00\x03\x20\x0D')
+    ser.write(b'\xC0\x14\x05\x52\x05\xC0\x01\xC0\x00\xC0\x00\xC0\x00\xC0\x11\xC0\x05\xC0\x07\xC0\x08\x03\x9F\x0D')
+    ser.write(b'\xC0\x14\x05\x52\x06\xC0\x09\xC0\x8A\xC0\x0B\xC0\x00\xC0\x00\xC0\x15\xC0\x0F\xC8\x92\x71\xFC\x0D')
+    ser.write(b'\xC0\x14\x05\x52\x07\x39\xC7\x0D\xE0\x50\xFA\x00\x00\x00\x00\x27\x02\x76\x04\x5D\x00\x71\x46\x0D')
+
+    #packet7send(paramfile)
 def strflt2bytes(inp, multiply = 1, bytesnum= 2):
     return int(float(inp[:-1])*multiply).to_bytes(bytesnum)
 
@@ -118,8 +120,8 @@ def packet2send(paramin):
 
 def packet3send(paramin):
     select = 0
-    if int(paramin[28]) < 0: hall = b'\xFF' + (100-(int(paramin[28])*-1)).to_bytes(1)
-    if int(paramin[28]) > 0: hall = int(paramin[28]).to_bytes(1)
+    if int(paramin[28]) < 0: hall = b'\xFF' + int((256-float(paramin[28])*-1)).to_bytes(1)
+    if int(paramin[28]) > 0: hall = b'\x00' + int(paramin[28]).to_bytes(1)
     if paramin[36] == "ON\n": select += 8
     if paramin[37] == "YES\n": select += 16
     if paramin[38] == "YES\n": select += 32
@@ -128,7 +130,24 @@ def packet3send(paramin):
     buffer = sendheader + responemultibyte + votolRbyte + b'\x03' + hall + strflt2bytes(paramin[29],1,1) + strflt2bytes(paramin[30],1,1) + strflt2bytes(paramin[31],1,1) + strflt2bytes(paramin[32]) + strflt2bytes(paramin[33]) + strflt2bytes(paramin[34]) + strflt2bytes(paramin[35],1,1) + select.to_bytes(1) + strflt2bytes(paramin[41],1,1) + strflt2bytes(paramin[42],1,1) + strflt2bytes(paramin[43],1,1) + strflt2bytes(paramin[44],1,1)
     ser.write(buffer+crc16(buffer)+b'\x0d')
 
+def packet4send(paramin):
+    select = 0
+    if paramin[45] == "ON\n": select += 1
+    if paramin[46] == "ON\n": select += 2
+    if paramin[47] == "LIN\n": select += 4
+    if paramin[48] == "ON\n": select += 8
+    if paramin[49] == "ON\n": select += 16
+    if paramin[50] == "HIGH\n": select += 32
+    if paramin[51] == "ON\n": select += 64
+    buffer = sendheader + responemultibyte +votolRbyte + b'\x04' + select.to_bytes(1) + strflt2bytes(paramin[52],327.67,2) + strflt2bytes(paramin[53],1,2) + strflt2bytes(paramin[54],1,2) + strflt2bytes(paramin[55],1,1) + strflt2bytes(paramin[56],1,1) +strflt2bytes(paramin[57],1,1) + strflt2bytes(paramin[58]) + strflt2bytes(paramin[59]) + strflt2bytes(paramin[60],1,2) + strflt2bytes(paramin[61],1,1)
+    ser.write(buffer + crc16(buffer) + b'\x0d')
+
+def packet7send(paramin):
+    pass
 def mainloop():
+    exi = False
+    count = 0
+    msg = ''
     while not exi:
         for c in ser.read():
             count = count + 1
@@ -238,4 +257,4 @@ def mainloop():
                 msg = ''
 if __name__ == "__main__":
     print("Votol Controller Emulator")
-    connect()
+    mainloop()
