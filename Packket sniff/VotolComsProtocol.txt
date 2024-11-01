@@ -49,8 +49,8 @@ A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 ---------------------------------------------------------------
 /+/ 03 00 1E 50 64 69 04 1A 00 14 24 D4 0A 30 18 16 E9 71
 001E	B5-6:hall angle (Program min -99 max 99)
-	     if positive B5:00;angle = B6
-	     if negative B5:FF; angle = 100 - B6 base10
+	     if positive B5:00;B6 = angle
+	     if negative B5:FF;B6 = 256 - angle base10
 50	B7:Ic hightemp
 64	B8:Ic overtemp
 69	B9:Ic templimit
@@ -76,7 +76,7 @@ E9	B20:Software version
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
 	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:High]
 	    secureboot 				[xy:OFF]	  [(x+4) y:ON]
-0CCC	B6-7:MVB percent  (divine by 147(base10)) 
+0CCC	B6-7:MVB percent  (divine by 93) 
 0140	B8-9:MVB torque
 04B0	B10-11:Max RPM
 5C	B12:gear1 %A
@@ -93,7 +93,7 @@ CD	B5: PD0 checkbox [C(x=0): If F mode and no checkkbox]
 			 [C(x+4):if D mode]
 			 [C(x+1):if SW checked]
 			 [C(x+8):if LA checked]
-B7	B6: PD0 type [RANGE:00->7F <=> 1->128][+80 if IO]
+B7	B6: PD0 type [RANGE:00->7F(1->128 program)][+80 if IO]
 CD	B7: 	JTCK checkbox[same PD0]
 B6	B8: 	JTCK type [same PD0]
 CDB8	B9,10: 	SWD Checkbox [same PD0], SWD type [same PD0]
@@ -105,6 +105,15 @@ C008	B19,20:	PC15 Checkbox and type
 03	B21:RESERVED
 ---------------------------------------------------------------
 /+/ 06 C0 09 C0 8A C0 0B C0 00 C0 00 C0 15 C0 0F C8 92 71
+C009 B5,6:  PA0 Checkbox and type
+C08A B7,8:  PB9 Checkbox and type
+C00B B9,10: PB4 Checkbox and type
+C000 B11,12:PA15 Checkbox and type
+C000 B13,14:PB2 Checkbox and type
+C015 B15,16:PC14 Checkbox and type
+C00F B17,18:PB5 Checkbox and type
+C892 B19,20:PD15 Checkbox and type
+71 B21:RESERVED
 ---------------------------------------------------------------
 /+/ 07 39 C7 0D E0 50 FA 00 00 00 00 28 02 76 04 5F 00 71
 39	B5: Throttle begin voltage (hex to dec,divide bby 46(base10))

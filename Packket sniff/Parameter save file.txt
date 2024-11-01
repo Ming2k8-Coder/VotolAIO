@@ -6,8 +6,8 @@ In a wechat application i found this description(translate):	-motor resistance
 																-Engine deceleration slope
 but i can't place them because i don't have the bluetooth adapter (you can diy it. Bluetooth adapter is a hc05 serial bridge)
 
-note: data form hex. Everyline is a hex, range (00-FF).Two lines make a dual hex 0BB8 (fluxweaken) -> 3000
-NOTE: how program write .ini Config file to votol
+note: data form is hex. Everyline is a hex(windows show hex is int), range (00-FF).Two lines make a dual hex 0BB8 (fluxweaken) -> 3000
+NOTE: how program write .ini Config file to votol Controller
 	divide 119 bytes to 7 packet (17 bytes per packet)
 	add magic start,header,magic packet,packet index
 	end with XOR and 0D
