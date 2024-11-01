@@ -13,11 +13,10 @@ responemultibyte=b'\x05'
 votolRbyte=b'R'
 #Volatile Variable------------
 msg = ''
+throttle = 0
 switch = 'No'
 mode = 'LOCAL'
 exi = False
-gear = ''
-state = ''
 weakfluxc=0
 throttle=0
 voltc=0
@@ -38,7 +37,7 @@ def crc16(buffer):
     return checksum
 def transmitDisp():
     global icstatus
-    header = sendheader + responebyte + b'\x59\x42'
+    header = sendheader + respone1byte + b'\x59\x42'
     voltd=int(map_range(float(throttle),0.77,4.60,1200,1123))
     ampeq=int(map_range(float(throttle),0.77,4.60,5,5400))
     if ampeq < 0: ampeq = 0
@@ -148,6 +147,9 @@ def mainloop():
     exi = False
     count = 0
     msg = ''
+    gear = ''
+    state = ''
+    global throttle
     while not exi:
         for c in ser.read():
             count = count + 1
