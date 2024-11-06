@@ -35,12 +35,12 @@ REPLIES From Controller
 0FA0	B10-11: FluxWeaken 
 2328	B12-13: hige param1/KP (in PID) 
 1770	B14-15: mid param1/StartPhase
-A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
-	     def gear		    [x	 (y+2):HIGH/(y+4):MEDI/(y+8):LOW]
-	     Motor type 	    [xy: SURFACE] [(x+1) y:VTYPE]
-	     Button/switch	    [xy:BUTTON]	  [(x+2) y:SWITCH]
-	     Motor Noise Reduction  [xy:OFF]	  [(x+4) y:ON]
-	     softstart		    [xy:OFF]      [(x+8) y:ON]
+A5	B16: Speed limit 	        [xy: OFF]	  [x	(y+1): ON]
+	     default gear(buton_oly)[x	 (y+2):HIGH/(y+4):MEDI/(y+8):LOW]
+	     Motor type 	        [xy: SURFACE] [(x+1) y:VTYPE]
+	     Button/switch	        [xy:BUTTON]	  [(x+2) y:SWITCH]
+	     Noise Reduction(lowBr) [xy:OFF]	  [(x+4) y:ON]
+	     softstart		        [xy:OFF]      [(x+8) y:ON]
 2A	B17: Speed limit percent
 0C	B18: SoftStartGrade
 1E	B19: sport off after(sec)
@@ -61,8 +61,8 @@ A5	B16: Speed limit 	    [xy: OFF]	  [x	 (y+1): ON]
 30	B17:{00:xy} Hill Hold control 		    [x0: OFF] [x     8: ON]
 		    exchange phase wire blu-gren    [xy:NO]   [(x+1) y:YES]
 		    exchange hall wire yellow-blu   [xy:NO]   [(x+2) y:YES]
-		    Sport auto off		    [xy:OFF]  [(x+4) y:	ON]
-		    motor rotation 		    [xy: FWD] [(x+8) y: REV]
+		    Sport auto turn off		    	[xy:OFF]  [(x+4) y:	ON]
+		    motor rotation changing 	    [xy: FWD] [(x+8) y: REV]
 18	B18: Pole pairs
 16	B19: EABS%
 E9	B20:Software version
@@ -70,12 +70,12 @@ E9	B20:Software version
 ---------------------------------------------------------------
 /+/ 04 06 0C CC 01 40 04 B0 5C 5C 05 01 F4 17 70 00 23 03
 06	B5: auto reverse (MVB) 			[xy:OFF]	  [x     (y+1):ON]
-	    ConstantSpeed (3gearHDC): 		[xy:OFF]	  [x     (y+2):ON]
-	    communication(output) 		[xy:HALL]  [x     (y+4):LIN]
-	    Cruise 				[xy:OFF]          [x     (y+8):ON]
+	    ConstSpeed (3gear_enable/HDC):[xy:OFF]	  [x     (y+2):ON]
+	    communication(output) 		[xy:HALL]  	  [x     (y+4):LIN]
+	    CruiseMode  				[xy:OFF]      [x     (y+8):ON]
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
 	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:HIGH]
-	    secureboot 				[xy:OFF]	  [(x+4) y:ON]
+	    secureboot 		  			[xy:OFF]	  [(x+4) y:ON]
 0CCC	B6-7:MVB percent  (divine by 147) 
 0140	B8-9:MVB torque
 04B0	B10-11:Max RPM

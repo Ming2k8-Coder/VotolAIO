@@ -71,7 +71,7 @@ B48:		EBS ratio					0-100%
 B49:		Software version			x.xx
 B50:		Hardware version			x.xx
 B51:		binary parameter			b0=Move assist
-										b1=HDC
+										b1=(3gear_enable)HDC
 										b2=Speedometer output [0=Hall][1=One line]
 										b3=Cruise control
 										b4=Double voltage
