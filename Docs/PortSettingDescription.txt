@@ -1,38 +1,44 @@
+GENERAL NOTE: ports which aren't connected to physical wire are considered passive/empty
+		   in 50s 80s there are 7 port avalible for custom func, 1 port for high brake, 1 port lin/hall speedometer,1 port stealavoid, need to check port for thermostat hall
+
 NOTE: nếu có (?) hoặc (đ bt) thì không nên sử dụng <không được kiểm chứng>
       on/off là tắt bật các setting có trong page123 (nếu ko dùng thì setting mặc định)
-1:empty_func(trống)
-2:low_speed_switch(số 1 nếu nối GND)
-3:low_speed_indication(đèn báo số 1)
-4:mid_speed_indication(đèn báo số 2)
-5:high_speed_indication(đèn báo số 3)
-6:high_speed_switch(số 3 nếu nối GND)
-7:egear_butten(bấm lên số)
-8:stealavoid(nối gnd KHÔNG THỂ NÀO DẮT[chống trộm])
-9:lamehome(đ bt)
-10:reverse_set(số lùi)
-11:single_wire_communication(giao tiếp 1 dây vs táp lô)
-12:side_sustain(chân chống/phanh thấp)
-13:hall_smulat_output(giao tiếp hall vs táp lô mấy con 133)
-14:soft_start_selct(on/off tính năng softstart)
-15:cruise_butten(giữ tốc)
-16:high_break(phanh cao)
-17:park_input(số P)
-18:sport_input(số S)
+      có space = tested ok nên sử dụng
+
+FullPortDecs:
+	1:empty_func(trống)
+	2:low_speed_switch(số 1 nếu nối GND)
+3:low_speed_indication(đèn báo số 1)? testing
+4:mid_speed_indication(đèn báo số 2)? testing
+5:high_speed_indication(đèn báo số 3)? testing
+	6:high_speed_switch(số 3 nếu nối GND)
+	7:egear_butten(bấm lên số)
+	8:stealavoid(nối gnd KHÔNG THỂ NÀO DẮT[chống trộm])
+	9:lamehome(motor auto drive at half max rpm when turn on func/one button fix/ khi tay ga lỗi, bấm nút thì xe tự đi với tốc độ nửa max tua)
+	10:reverse_set(số lùi)(control by throttle, max rpm defined by percent in page3)
+	11:single_wire_communication(giao tiếp 1 dây vs táp lô)
+	12:side_sustain(chân chống/phanh thấp)
+	13:hall_smulat_output(giao tiếp hall vs táp lô mấy con 133)
+14:soft_start_selct(on/off tính năng softstart)?
+	15:cruise_butten(giữ tốc)
+	16:high_break(phanh cao)
+	17:park_input(số P)
+	18:sport_input(số S)
 19:undef_IO_option(func của PD15 CẤM DÙNG)
-20:emergent_sotp(dừng khẩn cấp)
+20:emergent_sotp(dừng khẩn cấp)?
 21:LY_undef_IO_option(đ bt ~19)
-22:LY_e_gear(dây tự học)
+	22:LY_e_gear(dây tự học)
 23:LY_single_wire_communication(đ bt ~11) 
-24:speed_limit(on/off giới hạn tốc độ)
-25:eabs_on_off(on/off phanh tái tạo)
-26:cruise_with_lamehome(15+9)
-27:egear_with_lamehome(7+9)
+24:speed_limit(on/off giới hạn tốc độ)?
+25:eabs_on_off(on/off phanh tái tạo)?
+	26:cruise_with_lamehome(if throttle error => 26=9;if not => 26=15)
+	27:egear_with_lamehome(if throttle error => 27=9;if not => 27=7)
 28:low_break(phanh thấp)
 29:half_test_single_wire_communication(đ bt)
-30:park_with_lamehome(17+9)
-31:reverse_pressed_run(bấm thì MỚI LÙI)
+30:park_iwith_lamehome(17+9)
+	31:reverse_pressed_run(bấm thì MỚI LÙI)(rpm defined by percent in page3)
 32:hill_down_disable(đ bt)
-33:voltage_select(đ bt)
+33:voltage_select(đ bt)? double voltage 
 34:auto_cruise_enable(tự bật cruise khi giữ ga trong 8s)
 35:DRN_switch_D_butten(đ bt)
 36:DRN_switch_R_butten(đ bt)
@@ -51,8 +57,8 @@ NOTE: nếu có (?) hoặc (đ bt) thì không nên sử dụng <không được
 49:egear_two_current(đ bt)
 50:footplat_enable(đ bt)
 51:coast_enable( cho phép lướt [đè mo])
-52:Ext_temperatrue_KTY84_150(cảm biến ndo KTY84_150)
-53:Ext_temperatrue_MF52_103_B3380(cảm biến ndo MF52_103_B3380)
+52:Ext_temperatrue_KTY84_150(cảm biến ndo KTY84_150)?
+53:Ext_temperatrue_MF52_103_B3380(cảm biến ndo MF52_103_B3380)?
 54:egear_add(bấm lên số)
 55:egear_sub(bấm xuống số)
 56:park_with_auto_enter(tự vào P?)
