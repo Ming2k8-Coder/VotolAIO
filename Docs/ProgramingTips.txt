@@ -16,12 +16,14 @@ Advanced MTPA: MTPA ~ (Kv/60)*volt*polepair*efficentcy (mid)
     Port Setting PD15 SW-ON (off = no throttle regen)
     Decrease Traction Control/TC2 (range 20-9000, from 9000 decline)
     Tune rate of decline/regen brake (0-255)
+    Can not cooperation with move vehicle booster
 
 2, Speedometer calib (not recommend, calib on speedo) (VINO VIDEO)
     (GPS/Speedo)*64*256 ; default 9428 <=> ratio gps/speedo 0,575
     
 3, Auto Cruise (Under test)
 4, LED Speed indication (Under test)
-5, Lamehome (Under test)
+5, Lamehome
+    function which trigger half max rpm , can be cooperation with egear/cruise button
 6, LY Functions (Under test)
 7, Emergency_sotp (Under test)

@@ -12,12 +12,12 @@ REPLIES From Controller
 	B0:magic start [C9:Program SEND][C0:VOTOL SEND]
 	B1:always 14 (why?)
 	B2-3:magic packet -Program B2:02 // B3: 50 to acsii is P (param write)
-			  [0D(respone1pactket) 50(ascii:P):Voto Debug WriOK][05(responepackets) 52(acsii:R):Voto Debug Read]
+			  [0D(respone1pactket) 50(ascii:P):Voto Debug WriOK][05(responepackets) 52(acsii:R):Votol  Read]
 	B4,packet index 1->7,end with xor sum and magic end
 ----------------------------------------------------------------
 /+/ 01 14 02 03 7F 02 94 0A 00 32 23 28 02 76 04 5F 00 71
 14	B5: Model type 	    [05: EM-30s][0A:EM-50s][14:EM-100s][1E:EM-150s][28:EM-200s]
-02	B6: Batteryvvoltage [00: 48V][01: 60V][02: 72V][03:84V][04: 96V]
+02	B6: Batteryvvoltage/brandname [x0: 48V][x1: 60V][x2: 72V][x3:84V][x4: 96V][(0->F)y:brandname;
 037F	B7-8: Overvoltage
 0294	B9-10: Soft Undervoltage
 0A	B11: Undervolt Variation
@@ -36,10 +36,10 @@ REPLIES From Controller
 2328	B12-13: hige param1/KP (in PID) 
 1770	B14-15: mid param1/StartPhase
 A5	B16: Speed limit 	        [xy: OFF]	  [x	(y+1): ON]
-	     default gear(buton_oly)[x	 (y+2):HIGH/(y+4):MEDI/(y+8):LOW]
+	     default gear(buton_oly)	[x	 (y+2):HIGH/(y+4):MEDI/(y+8):LOW]
 	     Motor type 	        [xy: SURFACE] [(x+1) y:VTYPE]
 	     Button/switch	        [xy:BUTTON]	  [(x+2) y:SWITCH]
-	     Noise Reduction(lowBr) [xy:OFF]	  [(x+4) y:ON]
+	     Noise Reduction(lowBr) 	[xy:OFF]	  [(x+4) y:ON]
 	     softstart		        [xy:OFF]      [(x+8) y:ON]
 2A	B17: Speed limit percent
 0C	B18: SoftStartGrade
@@ -61,7 +61,7 @@ A5	B16: Speed limit 	        [xy: OFF]	  [x	(y+1): ON]
 30	B17:{00:xy} Hill Hold control 		    [x0: OFF] [x     8: ON]
 		    exchange phase wire blu-gren    [xy:NO]   [(x+1) y:YES]
 		    exchange hall wire yellow-blu   [xy:NO]   [(x+2) y:YES]
-		    Sport auto turn off		    	[xy:OFF]  [(x+4) y:	ON]
+		    Sport auto turn off		    [xy:OFF]  [(x+4) y:	ON]
 		    motor rotation changing 	    [xy: FWD] [(x+8) y: REV]
 18	B18: Pole pairs
 16	B19: EABS%
@@ -70,12 +70,12 @@ E9	B20:Software version
 ---------------------------------------------------------------
 /+/ 04 06 0C CC 01 40 04 B0 5C 5C 05 01 F4 17 70 00 23 03
 06	B5: auto reverse (MVB) 			[xy:OFF]	  [x     (y+1):ON]
-	    ConstSpeed (3gear_enable/HDC):[xy:OFF]	  [x     (y+2):ON]
+	    ConstSpeed (3gear_enable/HDC):	[xy:OFF]	  [x     (y+2):ON]
 	    communication(output) 		[xy:HALL]  	  [x     (y+4):LIN]
-	    CruiseMode  				[xy:OFF]      [x     (y+8):ON]
+	    CruiseMode  			[xy:OFF]      	  [x     (y+8):ON]
 	    doublevoltage det 			[xy:OFF]   	  [(x+1) y:ON]
 	    doublevoltage lowhigh 		[xy:LOW]	  [(x+2) y:HIGH]
-	    secureboot 		  			[xy:OFF]	  [(x+4) y:ON]
+	    secureboot 		  		[xy:OFF]	  [(x+4) y:ON]
 0CCC	B6-7:MVB percent  (divine by 147) 
 0140	B8-9:MVB torque
 04B0	B10-11:Max RPM

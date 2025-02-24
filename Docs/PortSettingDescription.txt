@@ -36,15 +36,15 @@ FullPortDecs:
 28:low_break(phanh thấp)
 29:half_test_single_wire_communication(đ bt)
 30:park_iwith_lamehome(17+9)
-	31:reverse_pressed_run(bấm thì MỚI LÙI)(rpm defined by percent in page3)
-32:hill_down_disable(đ bt)
+	31:reverse_pressed_run(bấm thì MỚI LÙI)(reverse with max rpm defined by percent in page3)
+32:hill_down_disable(disable 3gear?)
 33:voltage_select(đ bt)? double voltage 
-34:auto_cruise_enable(tự bật cruise khi giữ ga trong 8s)
-35:DRN_switch_D_butten(đ bt)
-36:DRN_switch_R_butten(đ bt)
+34:auto_cruise_enable(tự bật cruise khi giữ ga trong 8s)?
+35:DRN_switch_D_butten(drive switch, on drn car gear?)
+36:DRN_switch_R_butten(reves switch, om drn car gear?)
 37:ebreak_ctl_deal(đ bt)
 38:Ext_temp_KTY83_122(cảm biến ndo  KTY83_122)
-39:pre_charger(sạc tụ chống tia lửa điện)
+39:pre_charger(sạc tụ chống tia lửa điện)?
 40:main_relay_on_deal(đ bt)
 41:high_break_plus_deal(đ bt)
 42:low_break_plus_deal(đ bt)
@@ -55,16 +55,16 @@ FullPortDecs:
 47:two_egear(đ bt)
 48:four_egear(đ bt)
 49:egear_two_current(đ bt)
-50:footplat_enable(đ bt)
-51:coast_enable( cho phép lướt [đè mo])
+50:footplat_enable(cho phép sử dụng tay ga)?
+51:coast_enable( cho phép lướt [đè mo])?
 52:Ext_temperatrue_KTY84_150(cảm biến ndo KTY84_150)?
 53:Ext_temperatrue_MF52_103_B3380(cảm biến ndo MF52_103_B3380)?
-54:egear_add(bấm lên số)
-55:egear_sub(bấm xuống số)
+54:egear_add(bấm lên số)?
+55:egear_sub(bấm xuống số)?
 56:park_with_auto_enter(tự vào P?)
 57:Lead_acid_Lithium_selcet(lựa chọn pin?)
 58:park_hold_dectet(số P kèm đ bt)
-59:cruise_with_reverse(cruise kèm lùi)
+    59:cruise_with_reverse(cruise kèm lùi)
 60:remove_speed_limit_with_58(đ bt vs 58)
 61:seat_switch_dectet(cảm biến dây at?)
 62:fan_ctrl(điều khiển quạt làm mát?)
