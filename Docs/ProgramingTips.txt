@@ -10,11 +10,24 @@ Tính MTPA ở hệ volt đang dùng
 Kv = ratedSpeed/volt (ratedSpeed là tốc dộ khi tắt FluxWeaken và tắt enable 3 gear)
 Basic MTPA: MTPA ~ (Kv/60)*volt (hub)
 Advanced MTPA: MTPA ~ (Kv/60)*volt*polepair*efficentcy (mid)
-
+--------------------------Voltage-----------------------
+Lowest start voltage 29,5v
+Lowest run voltage 19,5v
+-------------------------Calib--------------------------
+weak calib: relevant to vd id current (if set wrong, only affect flux weakening range)
+-------------------------Phase--------------------------
+sw 2.33
+phase page 1: limit iq current
+1 phase unit = 0.01A.
+phase is per mosfet. 100s, 3 fet per side, max phase 9960 => 422A phase max
+min phase page 50-80s 232
+max phase = id + iq
+if id + iq > max phase => id,iq max = 1/2 max phase
+hall angle affect vd voltage
 --------------------------Advanced Function--------------------------
 1, Regen brake (~Datbike Quantum) (VINO VIDEO)
-    Port Setting PD15 SW-ON (off = no throttle regen)
-    Decrease Traction Control/TC2 (range 20-9000, from 9000 decline)
+    Port Setting PD15 SW-ON (off = no throttle regen)(turn on/off  id neg)
+    Decrease Traction Control/TC2 (range 20-9000, from 9000 decline) reverse phase curr
     Tune rate of decline/regen brake (0-255)
     Can not cooperation with move vehicle booster
 
@@ -22,7 +35,9 @@ Advanced MTPA: MTPA ~ (Kv/60)*volt*polepair*efficentcy (mid)
     (GPS/Speedo)*64*256 ; default 9428 <=> ratio gps/speedo 0,575
     
 3, Auto Cruise (Under test)
-4, LED Speed indication (Under test)
+4, Engine Thermostat
+	PA0 ext_temp
+	Both grey white and thermostat connected to PA0 so either one can be used but not both at same time
 5, Lamehome
     function which trigger half max rpm , can be cooperation with egear/cruise button
 6, LY Functions (Under test)

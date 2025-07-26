@@ -8,11 +8,11 @@ NOTE: nếu có (?) hoặc (đ bt) thì không nên sử dụng <không được
 FullPortDecs:
 	1:empty_func(trống)
 	2:low_speed_switch(số 1 nếu nối GND)
-3:low_speed_indication(đèn báo số 1)? testing
-4:mid_speed_indication(đèn báo số 2)? testing
-5:high_speed_indication(đèn báo số 3)? testing
+3:low_speed_indication(đèn báo số 1)? FAILED
+4:mid_speed_indication(đèn báo số 2)? FAILED
+5:high_speed_indication(đèn báo số 3)? FAILED
 	6:high_speed_switch(số 3 nếu nối GND)
-	7:egear_butten(bấm lên số)
+	7:egear_butten(bấm lên số) (27 oke)
 	8:stealavoid(nối gnd KHÔNG THỂ NÀO DẮT[chống trộm])
 	9:lamehome(motor auto drive at half max rpm when turn on func/one button fix/ khi tay ga lỗi, bấm nút thì xe tự đi với tốc độ nửa max tua)
 	10:reverse_set(số lùi)(control by throttle, max rpm defined by percent in page3)
@@ -24,8 +24,8 @@ FullPortDecs:
 	16:high_break(phanh cao)
 	17:park_input(số P)
 	18:sport_input(số S)
-19:undef_IO_option(func của PD15 CẤM DÙNG)
-20:emergent_sotp(dừng khẩn cấp)?
+-19:undef_IO_option(func của PD15 CẤM DÙNG)
+20:emergent_sotp(dừng khẩn cấp)?/20:LY_safe_start FAILED
 21:LY_undef_IO_option(đ bt ~19)
 	22:LY_e_gear(dây tự học)
 23:LY_single_wire_communication(đ bt ~11) 
@@ -38,30 +38,31 @@ FullPortDecs:
 30:park_iwith_lamehome(17+9)
 	31:reverse_pressed_run(bấm thì MỚI LÙI)(reverse with max rpm defined by percent in page3)
 32:hill_down_disable(disable 3gear?)
-33:voltage_select(đ bt)? double voltage 
+	33:voltage_select(double voltage), check box page2. when active, ecu will change battery voltage (60->72,72->84,84->96,96->84)
 34:auto_cruise_enable(tự bật cruise khi giữ ga trong 8s)?
-35:DRN_switch_D_butten(drive switch, on drn car gear?)
-36:DRN_switch_R_butten(reves switch, om drn car gear?)
+	35:DRN_switch_D_butten(drive switch, on drn car gear) } Only working when 36 is present. when port have func35 active, motor forward direction
+	36:DRN_switch_R_butten(reves switch, on drn car gear) } When port have func36 active, motor backward direction. when neither port active, motor neutral mode (REAL NEUTRAL, like ecu is disconnected from motor)
 37:ebreak_ctl_deal(đ bt)
-38:Ext_temp_KTY83_122(cảm biến ndo  KTY83_122)
+	38:Ext_temp_KTY83_122(cảm biến ndo  KTY83_122) PA0
 39:pre_charger(sạc tụ chống tia lửa điện)?
 40:main_relay_on_deal(đ bt)
 41:high_break_plus_deal(đ bt)
 42:low_break_plus_deal(đ bt)
 43:change_motor_direct(đảo chiều động cơ)
 44:_low_speed_switch_butten( bấm thì số 1?)
-45:_120_change_motor_direct(đ bt)
+	45:_120_change_motor_direct(tickbox exchange) not tick to both tick, first tick only turn to second tick only and vice versa. PRESET EXCHANGE CAN BE SET ONLY WHEN PORT NOT ACTIVE
 46:_60_change_motor_direct(đ bt)
-47:two_egear(đ bt)
-48:four_egear(đ bt)
+	47:two_egear(bấm số như egerbuten nhưng chỉ đc số L,M (1,2) page2 button)
+	48:four_egear(tương tự ở trên nhưng LMHS(1,2,3,sport) page2 button)
 49:egear_two_current(đ bt)
 50:footplat_enable(cho phép sử dụng tay ga)?
 51:coast_enable( cho phép lướt [đè mo])?
-52:Ext_temperatrue_KTY84_150(cảm biến ndo KTY84_150)?
-53:Ext_temperatrue_MF52_103_B3380(cảm biến ndo MF52_103_B3380)?
-54:egear_add(bấm lên số)?
-55:egear_sub(bấm xuống số)?
-56:park_with_auto_enter(tự vào P?)
+	52:Ext_temperatrue_KTY84_150(cảm biến ndo KTY84_150) PA0
+	53:Ext_temperatrue_MF52_103_B3380(cảm biến ndo MF52_103_B3380) PA0
+	54:egear_add(bấm lên số page2 button)
+	55:egear_sub(bấm xuống số page2 button)
+	56:park_with_auto_enter(như nút park nhưng ko đi xe 5s sẽ tự bật)
+-------------------------------------
 57:Lead_acid_Lithium_selcet(lựa chọn pin?)
 58:park_hold_dectet(số P kèm đ bt)
     59:cruise_with_reverse(cruise kèm lùi)

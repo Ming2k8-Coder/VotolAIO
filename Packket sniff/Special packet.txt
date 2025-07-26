@@ -20,8 +20,9 @@ votolresetreply(Votolsend)
 	B3-4-5-6:Acsii "SHOW"
 	B12: Remote/local control [55: Remote(từ uart)][AA: local(tự đk)]
 	B13-14: Throttle remote (divide 5945(base10) to get throttle voltage)
-	B15: Gear/brake/reverse/lock(remote) [x0->x3:L/M/H/S][8x:Brake][4x:Reverse][2x:Lock]
+	B15: Gear/brake/reverse/lock(remote) switch [x0->x3:L/M/H/S][8x:Brake][4x:Reverse][2x:Lock]
 	B16: weak flux calibri (max 255)
+	B17: AA
 	B18-19: Voltage Calibri (1119 opt)
 	B20-21: Current calibri
 	B22:Xor sum

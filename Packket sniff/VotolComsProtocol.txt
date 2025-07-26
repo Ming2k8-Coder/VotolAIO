@@ -125,4 +125,7 @@ FA	B10: Rate of rise
 0000	B11-12:starting torque
 0000	B13-14:Combine /delay torue
 28 02 76 04 5F 00 71 : get from pack1 to make current check results 
-
+--------------------------------------------------------------
+aux
+Broadcast C0 14 0D FE EF 55 AA 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 37 0D 
+Afterwrite C0 14 0D 50 4E 01 23 00 00 00 00 00 00 0C 00 00 56 4B 00 00 01 07 F2 0D
