@@ -2,17 +2,25 @@ import os
 import serial
 import time 
 from pathlib import Path
+import pandas as pd
+import numpy as np
 ROOT_DIR = Path(__file__).parent
 TEXT_FILE = ROOT_DIR / 'VotolParamemu.txt'
-
+CSV_FILE = ROOT_DIR / 'ecu_log.csv'
 #Const Variable---------------
-ser = serial.Serial('COM18')
+ser = serial.Serial('COM11')
 sendheader=b'\xC0\x14' # Controller sending
 respone1byte=b'\x0D'
 responemultibyte=b'\x05'
 votolRbyte=b'R'
+#Config Var-----------------
+repeatdata = 1
 #Volatile Variable------------
 msg = ''
+csvmode = False
+lineiter = 0
+linenum = 0
+linerepeat = 0
 throttle = 0
 switch = 'No'
 mode = 'LOCAL'
@@ -37,24 +45,61 @@ def crc16(buffer):
     return checksum
 def transmitDisp():
     global icstatus
+    global linerepeat
+    global lineiter
+    global switch
+    #throttle = 3.45
     header = sendheader + respone1byte + b'\x59\x42'
-    voltd=int(map_range(float(throttle),0.77,4.60,1200,1123))
-    ampeq=int(map_range(float(throttle),0.77,4.60,5,5400))
-    if ampeq < 0: ampeq = 0
-    rpm=int(map_range(float(throttle),0.77,4.60,0,9000))
-    if rpm <= 0:
-        icstatus=b'\x00'
-        rpm=0
+    tempcof= 8000
     unknownbit=b'\x01'
     fault= b'\x00\x00\x00\x00'
-    ictemp= 40 + 50
-    motemp=67 + 50
-    tempcof= 8000
-    buffer = header + voltd.to_bytes(2) + ampeq.to_bytes(2) +unknownbit+ fault + rpm.to_bytes(2) + ictemp.to_bytes(1) + motemp.to_bytes(1) + tempcof.to_bytes(2) + fustatus + icstatus
+    if (csvmode):
+        if lineiter == linenum:
+            lineiter = 0
+        if linerepeat < repeatdata:
+            linerepeat = linerepeat + 1
+        else:
+            lineiter = lineiter + 1
+            linerepeat = 0
+        print(f'Data:{lineiter}/{linenum}')
+        specrow = df.iloc[lineiter]
+        
+        if switch == 'No':
+            voltq = specrow['Battery Voltage (V)'] * 10
+            amped = specrow['Battery Current (A)'] * 10
+        if switch == 'AxisV':
+            voltq = specrow['Vq (V)'] * 100
+            amped = specrow['Vd (V)'] * 100
+        if switch == 'AxisA':
+            voltq = specrow['Iq (A)'] * 100
+            amped = specrow['Id (A)'] * 100      
+        rpm = specrow['RPM'].item()
+        voltq = int(voltq)
+        amped = int(amped)
+        try:
+            tempcof = specrow['Temperature Coefficient']
+        except:
+            pass
+        ictemp= specrow['Controller Temp (°C)'] + 50
+        motemp= specrow['External Temp (°C)'] + 50
+        ictemp = ictemp.item()
+        motemp= motemp.item()
+    else:
+        voltq=int(map_range(float(throttle),0.77,4.60,1200,1123))
+        amped=int(map_range(float(throttle),0.77,4.60,5,5400))
+        if amped < 0: amped = 0
+        rpm=int(map_range(float(throttle),0.77,4.60,0,1200))
+        if rpm <= 0:
+            icstatus=b'\x00'
+            rpm=0
+        ictemp= 40 + 50
+        motemp= 67 + 50
+
+    buffer = header + voltq.to_bytes(2, signed=True) + amped.to_bytes(2, signed=True) +unknownbit+ fault + rpm.to_bytes(2, signed=True) + ictemp.to_bytes(1, signed=True) + motemp.to_bytes(1, signed=True) + tempcof.to_bytes(2) + fustatus + icstatus
     checksum = crc16(buffer)
     ser.write(buffer + checksum + b'\x0d')
     #ser.write(b"\xc0\x14\x0d\x59\x42\x02\x14\x00\x0f\x01\x00\x00\x00\x00\x02\xb8\x5d\x4b\x22\xd6\x80\x03\x01\x0d")
-    
+
 def connect():
     try:
         f = open(TEXT_FILE)
@@ -67,12 +112,12 @@ def connect():
     packet2send(paramfile)
     packet3send(paramfile)
     packet4send(paramfile)
-    #ser.write(b'\xC0\x14\x05\x52\x04\x06\x0C\xCC\x01\x40\x04\xB0\x5C\x5C\x05\x01\xF4\x17\x70\x00\x00\x03\x20\x0D')
+    #pack4ser.write(b'\xC0\x14\x05\x52\x04\x06\x0C\xCC\x01\x40\x04\xB0\x5C\x5C\x05\x01\xF4\x17\x70\x00\x00\x03\x20\x0D')
     ser.write(b'\xC0\x14\x05\x52\x05\xC0\x01\xC0\x00\xC0\x00\xC0\x00\xC0\x11\xC0\x05\xC0\x07\xC0\x08\x03\x9F\x0D')
     ser.write(b'\xC0\x14\x05\x52\x06\xC0\x09\xC0\x8A\xC0\x0B\xC0\x00\xC0\x00\xC0\x15\xC0\x0F\xC8\x92\x71\xFC\x0D')
     ser.write(b'\xC0\x14\x05\x52\x07\x39\xC7\x0D\xE0\x50\xFA\x00\x00\x00\x00\x27\x02\x76\x04\x5D\x00\x71\x46\x0D')
-
     #packet7send(paramfile)
+
 def strflt2bytes(inp, multiply = 1, bytesnum= 2):
     return int(float(inp[:-1])*multiply).to_bytes(bytesnum)
 
@@ -143,13 +188,18 @@ def packet4send(paramin):
 
 def packet7send(paramin):
     pass
+
 def mainloop():
+    timestampnew = time.time()
+    timestampold = timestampnew + 1
     exi = False
     count = 0
     msg = ''
     gear = ''
     state = ''
     global throttle
+    global switch
+    global mode
     while not exi:
         for c in ser.read():
             count = count + 1
@@ -243,7 +293,10 @@ def mainloop():
             if count == 22:
                 ampec = int(b+format(c, '02x'),16)
             if hex(c) == '0xd':
-                
+                timestampnew = time.time()
+                delay = timestampnew - timestampold
+                timestampold = timestampnew
+                print(f'Delay:{delay}')
                 print(f'Switch:{switch} Mode:{mode} Gear:{gear} State:{state} VoltageCalib:{voltc} AmpeCalib:{ampec} WkFlxCalib:{weakfluxc} Throttle:{throttle}v MSG:{msg}')
                 if msg[:5] == "LDGET":
                     print("CONNECT COMMAND")
@@ -251,6 +304,7 @@ def mainloop():
                     connect()
                 elif msg[:5] == "RESET":
                     print("RESET COMMAND")
+                    ser.write(b'\xC0\x14\x0D\xFE\xEF\x55\xAA\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x37\x0D')
                     ser.close()
                     exi = True
                 else:
@@ -259,4 +313,12 @@ def mainloop():
                 msg = ''
 if __name__ == "__main__":
     print("Votol Controller Emulator")
+    if (os.path.exists(CSV_FILE)):
+        print("Found CSV File - Displaying from csv")
+        csvmode =  True
+        df = pd.read_csv(CSV_FILE)
+        linenum = df.shape[0]
+        print(f'Total {linenum} data point')
+    else:
+        print(f"notfound {CSV_FILE}")
     mainloop()
